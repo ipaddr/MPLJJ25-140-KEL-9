@@ -4,9 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart'; // Import untuk FCM
 import 'screens/home_screen.dart';
 import 'screens/AddSchedule_screen.dart'; // Perbaiki import halaman tambah jadwal
-import 'screens/history_screen.dart'; // Import halaman riwayat pemeriksaan
+//import 'screens/history_screen.dart'; // Import halaman riwayat pemeriksaan
 import 'screens/profile_screen.dart'; // Import halaman profil pengguna
-import 'screens/EditSchedule_screen.dart'; // Import halaman penjadwalan ulang pemeriksaan
+import 'screens/Editschedule_screen.dart'; // Import halaman penjadwalan ulang pemeriksaan
 import 'package:sehatkita/screens/users_screen.dart'; // Import halaman daftar pengguna
 import 'package:sehatkita/screens/OtpVerification_screen.dart'; // Import halaman OTP verification
 

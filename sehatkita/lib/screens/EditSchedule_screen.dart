@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class EditScheduleCheckupScreen extends StatefulWidget {
   final String
-  id; // ID yang akan digunakan untuk menentukan entitas yang ingin diedit (schedule atau checkup)
+  id; // ID untuk entitas yang akan diedit (scheduleId atau checkupId)
   final String type; // Tipe entitas: "schedule" atau "checkup"
 
   EditScheduleCheckupScreen({required this.id, required this.type});
@@ -25,7 +25,7 @@ class _EditScheduleCheckupScreenState extends State<EditScheduleCheckupScreen> {
     _loadData();
   }
 
-  // Fungsi untuk memuat data jadwal pemeriksaan atau pemeriksaan
+  // Memuat data jadwal pemeriksaan atau pemeriksaan berdasarkan tipe
   _loadData() async {
     DocumentSnapshot doc;
     if (widget.type == 'schedule') {
@@ -39,7 +39,7 @@ class _EditScheduleCheckupScreenState extends State<EditScheduleCheckupScreen> {
     _detailsController.text = doc['details'];
   }
 
-  // Fungsi untuk memperbarui data jadwal pemeriksaan atau pemeriksaan
+  // Fungsi untuk memperbarui jadwal pemeriksaan atau pemeriksaan
   _updateData() async {
     if (widget.type == 'schedule') {
       await _firestore.collection('schedules').doc(widget.id).update({
@@ -60,7 +60,23 @@ class _EditScheduleCheckupScreenState extends State<EditScheduleCheckupScreen> {
         SnackBar(content: Text('Pemeriksaan berhasil diperbarui')),
       );
     }
-    Navigator.pop(context); // Kembali ke halaman sebelumnya setelah update
+    Navigator.pop(context); // Kembali setelah diperbarui
+  }
+
+  // Fungsi untuk menghapus data pemeriksaan atau jadwal
+  _deleteData() async {
+    if (widget.type == 'schedule') {
+      await _firestore.collection('schedules').doc(widget.id).delete();
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Jadwal dihapus')));
+    } else {
+      await _firestore.collection('checkups').doc(widget.id).delete();
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Pemeriksaan dihapus')));
+    }
+    Navigator.pop(context); // Kembali setelah dihapus
   }
 
   @override
@@ -93,6 +109,15 @@ class _EditScheduleCheckupScreenState extends State<EditScheduleCheckupScreen> {
             ElevatedButton(
               onPressed: _updateData,
               child: Text('Perbarui Data'),
+            ),
+            SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: _deleteData, // Tombol untuk menghapus data
+              child: Text('Hapus Data'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor:
+                    Colors.red, // Memberikan warna merah untuk tombol hapus
+              ),
             ),
           ],
         ),

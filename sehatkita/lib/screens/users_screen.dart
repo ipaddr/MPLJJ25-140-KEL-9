@@ -13,11 +13,17 @@ class UsersScreen extends StatelessWidget {
   }
 
   // Fungsi untuk menghapus pengguna
-  _deleteUser(String userId) async {
-    await _firestore.collection('users').doc(userId).delete();
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('Pengguna dihapus')));
+  Future<void> _deleteUser(BuildContext context, String userId) async {
+    try {
+      await _firestore.collection('users').doc(userId).delete();
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Pengguna dihapus')));
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Gagal menghapus pengguna')));
+    }
   }
 
   @override
@@ -50,8 +56,9 @@ class UsersScreen extends StatelessWidget {
                   icon: Icon(Icons.delete),
                   onPressed: () {
                     _deleteUser(
+                      context,
                       user['uid'],
-                    ); // Menghapus pengguna berdasarkan UID
+                    ); // Menghapus pengguna berdasarkan UID dan passing context
                   },
                 ),
               );
