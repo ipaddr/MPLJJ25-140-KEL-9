@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ScheduleScreen extends StatelessWidget {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // Fungsi untuk mengambil jadwal pemeriksaan dari Firestore
   Future<List<Map<String, dynamic>>> _getSchedule() async {
     QuerySnapshot snapshot = await _firestore.collection('schedules').get();
     return snapshot.docs
@@ -14,7 +15,7 @@ class ScheduleScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Schedule")),
+      appBar: AppBar(title: Text("Jadwal Pemeriksaan")),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: _getSchedule(),
         builder: (context, snapshot) {
@@ -25,7 +26,7 @@ class ScheduleScreen extends StatelessWidget {
             return Center(child: Text('Error: ${snapshot.error}'));
           }
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No schedules available.'));
+            return Center(child: Text('Tidak ada jadwal yang tersedia.'));
           }
 
           List<Map<String, dynamic>> schedules = snapshot.data!;
@@ -40,7 +41,7 @@ class ScheduleScreen extends StatelessWidget {
                 trailing: IconButton(
                   icon: Icon(Icons.arrow_forward),
                   onPressed: () {
-                    // Implement navigation to schedule details
+                    // Implementasi navigasi ke detail jadwal pemeriksaan
                   },
                 ),
               );

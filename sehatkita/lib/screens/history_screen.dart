@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class HistoryScreen extends StatelessWidget {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // Fungsi untuk mengambil riwayat pemeriksaan pengguna dari Firestore
   Future<List<Map<String, dynamic>>> _getHistory() async {
-    // Ambil data riwayat pemeriksaan dari Firestore
     QuerySnapshot snapshot = await _firestore.collection('checkups').get();
     return snapshot.docs
         .map((doc) => doc.data() as Map<String, dynamic>)
@@ -15,7 +15,7 @@ class HistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Checkup History")),
+      appBar: AppBar(title: Text("Riwayat Pemeriksaan")),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: _getHistory(),
         builder: (context, snapshot) {
@@ -26,7 +26,7 @@ class HistoryScreen extends StatelessWidget {
             return Center(child: Text('Error: ${snapshot.error}'));
           }
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No checkup history available.'));
+            return Center(child: Text('Tidak ada riwayat pemeriksaan.'));
           }
 
           List<Map<String, dynamic>> checkups = snapshot.data!;
@@ -41,7 +41,7 @@ class HistoryScreen extends StatelessWidget {
                 trailing: IconButton(
                   icon: Icon(Icons.info),
                   onPressed: () {
-                    // Implement action for viewing detailed checkup info
+                    // Aksi untuk melihat detail pemeriksaan jika diperlukan
                   },
                 ),
               );

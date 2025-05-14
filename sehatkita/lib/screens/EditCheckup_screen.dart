@@ -1,33 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class AddScheduleScreen extends StatefulWidget {
+class EditCheckupScreen extends StatefulWidget {
+  final String checkupId; // ID pemeriksaan yang akan diedit
+
+  EditCheckupScreen({required this.checkupId});
+
   @override
-  _AddScheduleScreenState createState() => _AddScheduleScreenState();
+  _EditCheckupScreenState createState() => _EditCheckupScreenState();
 }
 
-class _AddScheduleScreenState extends State<AddScheduleScreen> {
+class _EditCheckupScreenState extends State<EditCheckupScreen> {
   final _hospitalController = TextEditingController();
   final _dateController = TextEditingController();
   final _detailsController = TextEditingController();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  // Fungsi untuk menambah jadwal pemeriksaan ke Firestore
-  void _addSchedule() async {
-    await _firestore.collection('schedules').add({
+  @override
+  void initState() {
+    super.initState();
+    _loadCheckupData();
+  }
+
+  // Memuat data pemeriksaan dari Firestore
+  _loadCheckupData() async {
+    DocumentSnapshot checkupDoc =
+        await _firestore.collection('checkups').doc(widget.checkupId).get();
+    _hospitalController.text = checkupDoc['hospital'];
+    _dateController.text = checkupDoc['date'];
+    _detailsController.text = checkupDoc['details'];
+  }
+
+  // Memperbarui data pemeriksaan
+  _updateCheckup() async {
+    await _firestore.collection('checkups').doc(widget.checkupId).update({
       'hospital': _hospitalController.text,
       'date': _dateController.text,
       'details': _detailsController.text,
     });
-    Navigator.pop(
+    ScaffoldMessenger.of(
       context,
-    ); // Kembali ke halaman sebelumnya setelah jadwal ditambahkan
+    ).showSnackBar(SnackBar(content: Text("Pemeriksaan diperbarui")));
+    Navigator.pop(context); // Kembali setelah diperbarui
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Tambah Jadwal Pemeriksaan")),
+      appBar: AppBar(title: Text("Edit Pemeriksaan")),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
@@ -46,8 +66,8 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _addSchedule,
-              child: Text('Tambah Jadwal'),
+              onPressed: _updateCheckup,
+              child: Text('Perbarui Pemeriksaan'),
             ),
           ],
         ),
