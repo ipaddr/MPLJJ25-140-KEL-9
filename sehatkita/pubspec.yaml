@@ -19,6 +19,7 @@ dependencies:
   firebase_auth_web: ^5.8.13  # Ensure this is the correct version for web support
   cloud_firestore: ^4.6.0
   firebase_storage: ^11.4.0  # Firebase storage for file storage
+  flutter_native_splash: ^2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -27,6 +28,13 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  
+flutter_native_splash:
+  color: "#42a5f5"  # Ganti dengan warna yang diinginkan
+  image: assets/splash_logo.png  # Gambar logo splash screen
+  android: true
+  ios: true
+
 
   # If you have images or other assets, uncomment and add the paths
   # assets:
