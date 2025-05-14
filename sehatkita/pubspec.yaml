@@ -14,11 +14,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_core: ^2.16.0   # Firebase core for initialization
-  firebase_auth: ^4.3.0    # Firebase authentication
-  cloud_firestore: ^4.6.0  # Firestore for cloud database
+  firebase_core: ^2.16.0
+  firebase_auth: ^4.3.0
+  firebase_auth_web: ^5.8.13  # Ensure this is the correct version for web support
+  cloud_firestore: ^4.6.0
   firebase_storage: ^11.4.0  # Firebase storage for file storage
-  cupertino_icons: ^1.0.8   # Cupertino icons for iOS
 
 dev_dependencies:
   flutter_test:

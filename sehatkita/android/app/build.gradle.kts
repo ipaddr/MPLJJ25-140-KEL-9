@@ -11,7 +11,7 @@ plugins {
 android {
     namespace = "com.example.sehatkita"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "27.0.12077973"  // Menambahkan baris ini untuk menetapkan versi NDK yang sesuai
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
