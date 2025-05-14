@@ -1,18 +1,16 @@
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // Fungsi untuk mendapatkan data pengguna dari Firestore
   Future<Map<String, dynamic>?> _getUserData() async {
-    User? user = _auth.currentUser;
+    User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       DocumentSnapshot doc =
-          await FirebaseFirestore.instance
-              .collection('users')
-              .doc(user.uid)
-              .get();
+          await _firestore.collection('users').doc(user.uid).get();
       return doc.data() as Map<String, dynamic>?;
     }
     return null;
@@ -51,7 +49,7 @@ class HomeScreen extends StatelessWidget {
                     Navigator.pushNamed(
                       context,
                       '/schedule',
-                    ); // Halaman jadwal pemeriksaan
+                    ); // Arahkan ke halaman jadwal pemeriksaan
                   },
                   child: Text('View Schedule'),
                 ),
@@ -61,7 +59,7 @@ class HomeScreen extends StatelessWidget {
                     Navigator.pushNamed(
                       context,
                       '/history',
-                    ); // Halaman riwayat pemeriksaan
+                    ); // Arahkan ke halaman riwayat pemeriksaan
                   },
                   child: Text('View History'),
                 ),
