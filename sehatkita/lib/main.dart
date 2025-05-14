@@ -6,7 +6,7 @@ import 'screens/home_screen.dart';
 import 'screens/AddSchedule_screen.dart'; // Perbaiki import halaman tambah jadwal
 //import 'screens/history_screen.dart'; // Import halaman riwayat pemeriksaan
 import 'screens/profile_screen.dart'; // Import halaman profil pengguna
-import 'screens/Editschedule_screen.dart'; // Import halaman penjadwalan ulang pemeriksaan
+import 'screens/EditSchedule_screen.dart';
 import 'package:sehatkita/screens/users_screen.dart'; // Import halaman daftar pengguna
 import 'package:sehatkita/screens/OtpVerification_screen.dart'; // Import halaman OTP verification
 
@@ -78,8 +78,9 @@ class _MyAppState extends State<MyApp> {
         '/profile':
             (context) => ProfileScreen(), // Rute untuk halaman profil pengguna
         '/editSchedule':
-            (context) => EditScheduleScreen(
-              scheduleId: 'schedule_id',
+            (context) => EditScheduleCheckupScreen(
+              id: 'schedule_id', // Ganti dengan ID yang sesuai
+              type: 'schedule',
             ), // Rute untuk halaman penjadwalan ulang pemeriksaan
         '/otpVerification':
             (context) =>
