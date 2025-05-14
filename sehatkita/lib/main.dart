@@ -8,6 +8,7 @@ import 'screens/history_screen.dart'; // Import halaman riwayat pemeriksaan
 import 'screens/profile_screen.dart'; // Import halaman profil pengguna
 import 'screens/EditSchedule_screen.dart'; // Import halaman penjadwalan ulang pemeriksaan
 import 'package:sehatkita/screens/users_screen.dart'; // Import halaman daftar pengguna
+import 'package:sehatkita/screens/OtpVerification_screen.dart'; // Import halaman OTP verification
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +22,40 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("Handling a background message: ${message.messageId}");
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  // Firebase Messaging instance
+  final FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    _getFcmToken();
+  }
+
+  // Mendapatkan token FCM setelah Firebase diinisialisasi
+  Future<void> _getFcmToken() async {
+    String? token = await messaging.getToken();
+    print("FCM Token: $token");
+
+    // Simpan token FCM di Firestore atau SharedPreferences jika perlu
+    if (token != null) {
+      await _saveFcmToken(token);
+    }
+  }
+
+  // Fungsi untuk menyimpan token FCM ke Firestore
+  Future<void> _saveFcmToken(String token) async {
+    // Menyimpan token ke Firestore setelah pengguna berhasil login atau terautentikasi
+    FirebaseFirestore.instance.collection('users').doc('user_uid').update({
+      'fcmToken': token, // Menyimpan token FCM pada koleksi pengguna
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,6 +64,9 @@ class MyApp extends StatelessWidget {
       initialRoute: '/', // Tentukan rute awal
       routes: {
         '/': (context) => HomeScreen(), // Halaman awal (HomeScreen)
+        '/home':
+            (context) =>
+                HomeScreen(), // Rute ke halaman utama setelah verifikasi
         '/users':
             (context) => UsersScreen(), // Rute untuk halaman daftar pengguna
         '/addSchedule':
@@ -44,6 +81,9 @@ class MyApp extends StatelessWidget {
             (context) => EditScheduleScreen(
               scheduleId: 'schedule_id',
             ), // Rute untuk halaman penjadwalan ulang pemeriksaan
+        '/otpVerification':
+            (context) =>
+                OtpVerificationScreen(), // Rute untuk halaman OTP verification
       },
     );
   }
