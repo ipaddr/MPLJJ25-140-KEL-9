@@ -7,6 +7,7 @@ import 'screens/AddSchedule_screen.dart'; // Perbaiki import halaman tambah jadw
 import 'screens/history_screen.dart'; // Import halaman riwayat pemeriksaan
 import 'screens/profile_screen.dart'; // Import halaman profil pengguna
 import 'screens/EditSchedule_screen.dart'; // Import halaman penjadwalan ulang pemeriksaan
+import 'package:sehatkita/screens/users_screen.dart'; // Import halaman daftar pengguna
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +30,8 @@ class MyApp extends StatelessWidget {
       initialRoute: '/', // Tentukan rute awal
       routes: {
         '/': (context) => HomeScreen(), // Halaman awal (HomeScreen)
+        '/users':
+            (context) => UsersScreen(), // Rute untuk halaman daftar pengguna
         '/addSchedule':
             (context) =>
                 AddScheduleScreen(), // Rute untuk halaman tambah jadwal

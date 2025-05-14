@@ -44,6 +44,15 @@ class _EditCheckupScreenState extends State<EditCheckupScreen> {
     Navigator.pop(context); // Kembali setelah diperbarui
   }
 
+  // Fungsi untuk menghapus pemeriksaan
+  _deleteCheckup() async {
+    await _firestore.collection('checkups').doc(widget.checkupId).delete();
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text("Pemeriksaan dihapus")));
+    Navigator.pop(context); // Kembali setelah dihapus
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,6 +77,15 @@ class _EditCheckupScreenState extends State<EditCheckupScreen> {
             ElevatedButton(
               onPressed: _updateCheckup,
               child: Text('Perbarui Pemeriksaan'),
+            ),
+            SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: _deleteCheckup, // Tombol untuk menghapus pemeriksaan
+              child: Text('Hapus Pemeriksaan'),
+              style: ElevatedButton.styleFrom(
+                primary:
+                    Colors.red, // Memberikan warna merah untuk tombol hapus
+              ),
             ),
           ],
         ),
