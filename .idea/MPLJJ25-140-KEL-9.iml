@@ -6,6 +6,9 @@
       <excludeFolder url="file://$MODULE_DIR$/frontend/sehatkita/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/frontend/sehatkita/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/frontend/sehatkita/build" />
+      <excludeFolder url="file://$MODULE_DIR$/sehatkita/sehatkita/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/sehatkita/sehatkita/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/sehatkita/sehatkita/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
