@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'home_screen.dart'; // Pastikan mengimpor HomeScreen yang benar
 import 'package:sehatkita/widgets/custom_button.dart'; // Import CustomButton yang sudah ada
-import 'package:sehatkita/screens/register_screen.dart';
+import 'package:sehatkita/screen/register_screen.dart';
+import 'package:sehatkita/screen/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override

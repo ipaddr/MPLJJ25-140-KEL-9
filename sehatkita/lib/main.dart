@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sehatkita/screens/home_screen.dart'; // Import HomeScreen
-import 'package:sehatkita/screens/login_screen.dart'; // Import LoginScreen
-import 'package:sehatkita/screens/register_screen.dart'; // Import RegisterScreen
-import 'package:sehatkita/screens/splash_screen.dart'; // Import SplashScreen
+import 'package:sehatkita/screen/home_screen.dart'; // Import HomeScreen
+import 'package:sehatkita/screen/login_screen.dart'; // Import LoginScreen
+import 'package:sehatkita/screen/register_screen.dart'; // Import RegisterScreen
+import 'package:sehatkita/screen/splash_screen.dart'; // Import SplashScreen
 import 'package:sehatkita/color.dart'; // Import color for theme
 
 void main() {

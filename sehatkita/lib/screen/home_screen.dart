@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sehatkita/color.dart'; // Menggunakan warna yang sudah didefinisikan
 import 'form_screen.dart'; // Arahkan ke form screen
 import 'tanya_sehatbot_screen.dart'; // Arahkan ke Tanya SehatBot screen
-import 'package:sehatkita/screens/jadwal_screen.dart'; // Arahkan ke JadwalScreen
+import 'package:sehatkita/screen/jadwal_screen.dart'; // Arahkan ke JadwalScreen
 import 'package:sehatkita/screen/home_screen.dart';
 
 class HomeScreen extends StatefulWidget {
