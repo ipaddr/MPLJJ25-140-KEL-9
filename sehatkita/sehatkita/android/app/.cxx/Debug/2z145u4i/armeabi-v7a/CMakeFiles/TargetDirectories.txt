@@ -1,2 +1,0 @@
-C:/Users/LENOVO/Documents/GitHub/sehatkita/sehatkita/android/app/.cxx/Debug/2z145u4i/armeabi-v7a/CMakeFiles/edit_cache.dir
-C:/Users/LENOVO/Documents/GitHub/sehatkita/sehatkita/android/app/.cxx/Debug/2z145u4i/armeabi-v7a/CMakeFiles/rebuild_cache.dir
