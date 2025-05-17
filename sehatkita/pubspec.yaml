@@ -46,7 +46,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_native_splash: ^2.0.6
+  
   
   
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -67,7 +67,13 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - sehatkita/assets/images/splash_screen.png
+    - assets/images/splash_screen.png
+    - assets/images/hati.png
+    - assets/images/jadwal.png
+    - assets/images/cek.png
+    - assets/images/bot.png
+    - assets/images/error.png
+    - assets/images/dok.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

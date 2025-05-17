@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sehatkita/color.dart'; // Import color.dart to access AppColors
 //import 'package:sehatkita/screens/register_screen.dart';
 import 'login_screen.dart'; // Import login screen
-import 'package:sehatkita/screens/home_screen.dart';
+import 'package:sehatkita/screen/home_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   @override
