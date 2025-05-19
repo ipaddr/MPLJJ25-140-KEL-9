@@ -6,5 +6,9 @@ class AppColors {
   static const Color backgroundColor = Color(
     0xFFF0F8F8,
   ); // Warna latar belakang
-  static const Color buttonColor = Color(0xFF00C2B2); // Warna tombol
+  static const Color buttonColor = Color(0xFF00C2B2);
+
+  static var green;
+
+  static var primaryGreen; // Warna tombol
 }
