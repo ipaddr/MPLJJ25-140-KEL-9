@@ -1,0 +1,2 @@
+C:/Users/LENOVO/Documents/GitHub/MPLJJ25-140-KEL-9/sehatkita/sehatkita/android/app/.cxx/Debug/373f2s6s/x86/CMakeFiles/edit_cache.dir
+C:/Users/LENOVO/Documents/GitHub/MPLJJ25-140-KEL-9/sehatkita/sehatkita/android/app/.cxx/Debug/373f2s6s/x86/CMakeFiles/rebuild_cache.dir
