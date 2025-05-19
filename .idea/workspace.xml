@@ -4,21 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c41f075-d7d1-4d64-bc62-7d705b9accb5" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sehatkita/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sehatkita/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sehatkita/lib/screen/form_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sehatkita/lib/screen/form_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sehatkita/lib/screen/home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sehatkita/lib/screen/home_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sehatkita/lib/screen/iif.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sehatkita/lib/screen/jadwal_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sehatkita/lib/screen/jadwal_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sehatkita/lib/screen/login_admin_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sehatkita/lib/screen/login_admin_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sehatkita/lib/screen/login_petugas_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sehatkita/lib/screen/login_petugas_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sehatkita/lib/screen/login_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sehatkita/lib/screen/login_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sehatkita/lib/screen/splash_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sehatkita/lib/screen/splash_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sehatkita/lib/screen/tanya_sehatbot_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sehatkita/lib/screen/tanya_sehatbot_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sehatkita/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/sehatkita/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sehatkita/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/sehatkita/pubspec.yaml" afterDir="false" />
-    </list>
+    <list default="true" id="3c41f075-d7d1-4d64-bc62-7d705b9accb5" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
