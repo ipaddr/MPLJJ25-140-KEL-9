@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sehatkita/color.dart';
 import 'package:sehatkita/screen/register_admin_screen.dart';
-import 'package:sehatkita/screen/login_petugas_screen.dart';
 import 'package:sehatkita/screen/dashboard_admin_screen.dart';
 
 class LoginAdminScreen extends StatelessWidget {
-  const LoginAdminScreen({super.key}); // Use super parameter for key
+  const LoginAdminScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +40,7 @@ class LoginAdminScreen extends StatelessWidget {
                   border: Border.all(color: Colors.blue, width: 2),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withAlpha(128), // FIX: use withAlpha instead of withOpacity
+                      color: Colors.grey.withAlpha(128),
                       spreadRadius: 2,
                       blurRadius: 5,
                       offset: Offset(0, 3),
@@ -83,11 +82,10 @@ class LoginAdminScreen extends StatelessWidget {
                     SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
-                        // Navigasi ke dashboard admin setelah login berhasil
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => DashboardAdminScreen(), // FIX: Use correct class name
+                            builder: (context) => DashboardAdminScreen(),
                           ),
                         );
                       },
@@ -101,10 +99,7 @@ class LoginAdminScreen extends StatelessWidget {
                       child: Center(
                         child: Text(
                           "Login",
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
+                          style: TextStyle(fontSize: 18, color: Colors.white),
                         ),
                       ),
                     ),
@@ -121,24 +116,28 @@ class LoginAdminScreen extends StatelessWidget {
                                 ),
                               );
                             },
-                            child: Text("Don't have account? Please Register"),
+                            child: Text(
+                              "Don't have account? Please Register",
+                              style: TextStyle(color: Colors.blueAccent),
+                            ),
                           ),
                           TextButton(
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => LoginPetugasScreen(),
-                                ),
-                              );
+                              Navigator.pushNamed(context, '/login');
                             },
-                            child: Text("Silakan login sebagai Petugas"),
+                            child: Text(
+                              "Silahkan login sebagai user",
+                              style: TextStyle(color: Colors.blueAccent),
+                            ),
                           ),
                           TextButton(
                             onPressed: () {
-                              // TODO: Navigasi ke halaman login user jika ada
+                              Navigator.pushNamed(context, '/loginPetugas');
                             },
-                            child: Text("Silakan login sebagai user"),
+                            child: Text(
+                              "Silahkan login sebagai petugas",
+                              style: TextStyle(color: Colors.blueAccent),
+                            ),
                           ),
                         ],
                       ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sehatkita/color.dart';
-import 'package:sehatkita/screen/login_petugas_screen.dart';
 
 class LoginPetugasScreen extends StatefulWidget {
   @override
@@ -19,10 +18,9 @@ class _LoginPetugasScreenState extends State<LoginPetugasScreen> {
   }
 
   void _login() {
-    // Implement login logic here
+    // Contoh login logic, sesuaikan dengan backend
     print('Email: ${_emailController.text}');
     print('Password: ${_passwordController.text}');
-    // Navigasi ke dashboard setelah login berhasil
     Navigator.pushReplacementNamed(context, '/dashboardPetugas');
   }
 
@@ -36,9 +34,7 @@ class _LoginPetugasScreenState extends State<LoginPetugasScreen> {
           children: <Widget>[
             Container(
               height: 200,
-              decoration: BoxDecoration(
-                color: AppColors.primaryColor,
-              ),
+              decoration: BoxDecoration(color: AppColors.primaryColor),
               child: Center(
                 child: Text(
                   'Selamat Datang Di Sehat Kita',
@@ -96,7 +92,10 @@ class _LoginPetugasScreenState extends State<LoginPetugasScreen> {
                         onPressed: _login,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.primaryColor,
-                          padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 50,
+                            vertical: 15,
+                          ),
                           textStyle: TextStyle(fontSize: 18),
                         ),
                         child: Text('Login'),
@@ -114,7 +113,7 @@ class _LoginPetugasScreenState extends State<LoginPetugasScreen> {
                       SizedBox(height: 10.0),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, '/loginUser');
+                          Navigator.pushNamed(context, '/login');
                         },
                         child: Text(
                           "Silakan login sebagai user",

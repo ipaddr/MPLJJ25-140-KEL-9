@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'home_screen.dart'; // Pastikan mengimpor HomeScreen yang benar
-import 'package:sehatkita/widgets/custom_button.dart'; // Import CustomButton yang sudah ada
+import 'home_screen.dart';
+import 'package:sehatkita/widgets/custom_button.dart';
 import 'package:sehatkita/screen/register_screen.dart';
-import 'package:sehatkita/screen/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -22,10 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [
-                    Colors.white,
-                    Colors.green,
-                  ], // Gradient from white to green
+                  colors: [Colors.white, Colors.green],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                 ),
@@ -106,11 +102,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               border: OutlineInputBorder(),
                             ),
                           ),
-                          SizedBox(height: 20),
+                          SizedBox(height: 10),
                           CustomButton(
                             text: 'Login',
                             onPressed: () {
-                              // Setelah login berhasil, arahkan ke HomeScreen
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
@@ -122,16 +117,24 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(height: 20),
                           TextButton(
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => RegisterScreen(),
-                                ),
-                              );
+                              Navigator.pushNamed(context, '/register');
                             },
                             child: Text(
                               'Don\'t have an account? Please Register',
                             ),
+                          ),
+                          SizedBox(height: 0),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/loginPetugas');
+                            },
+                            child: Text('Silahkan login sebagai Petugas'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/loginAdmin');
+                            },
+                            child: Text('Silahkan login sebagai Admin'),
                           ),
                         ],
                       ),
