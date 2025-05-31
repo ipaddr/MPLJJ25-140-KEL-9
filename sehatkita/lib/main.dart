@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sehatkita/color.dart';
-
 import 'package:sehatkita/screen/splash_screen.dart';
 import 'package:sehatkita/screen/login_screen.dart';
 import 'package:sehatkita/screen/register_screen.dart';
@@ -14,8 +13,16 @@ import 'package:sehatkita/screen/dashboard_petugas.dart';
 import 'package:sehatkita/screen/input_data_petugas_screen.dart';
 import 'package:sehatkita/screen/login_admin_screen.dart';
 import 'package:sehatkita/screen/bottom_navigation_bar.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options:
+    DefaultFirebaseOptions
+        .currentPlatform, // Menggunakan konfigurasi dari firebase_options.dart
+  );
   runApp(MyApp());
 }
 
