@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c41f075-d7d1-4d64-bc62-7d705b9accb5" name="Changes" comment="" />
+    <list default="true" id="3c41f075-d7d1-4d64-bc62-7d705b9accb5" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/sehatkita/lib/screen/hasil_form.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sehatkita/lib/screen/hasil_form.dart" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -63,16 +65,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/sehatkita/lib/screen/hasil_pemeriksaan_screen.dart</url>
-          <line>19</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

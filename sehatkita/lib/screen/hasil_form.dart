@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sehatkita/screens/input_data_petugas_screen.dart';
+import 'package:sehatkita/screen/input_data_petugas_screen.dart';
 
 class HasilForm extends StatelessWidget {
   final String nama;
