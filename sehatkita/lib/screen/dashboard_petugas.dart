@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sehatkita/color.dart'; // Assuming color.dart contains the Color definitions
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'hasil_form.dart';
+import 'package:sehatkita/color.dart';
 
 class OfficerDashboardScreen extends StatefulWidget {
   @override
@@ -35,10 +37,7 @@ class _OfficerDashboardScreenState extends State<OfficerDashboardScreen> {
                 ),
                 Text(
                   'Hari ini, 22 April 2025',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 12,
-                  ),
+                  style: TextStyle(color: Colors.grey, fontSize: 12),
                 ),
               ],
             ),
@@ -59,10 +58,7 @@ class _OfficerDashboardScreenState extends State<OfficerDashboardScreen> {
             children: [
               Text(
                 'Jadwal & Lokasi Pemeriksaan Hari ini',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 16),
               Card(
@@ -120,12 +116,11 @@ class _OfficerDashboardScreenState extends State<OfficerDashboardScreen> {
                 ),
               ),
               SizedBox(height: 24),
+
+              // Section Daftar Pasien Terdaftar Hari Ini (StreamBuilder)
               Text(
                 'Daftar Pasien Terdaftar Hari Ini',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 16),
               Card(
@@ -133,39 +128,71 @@ class _OfficerDashboardScreenState extends State<OfficerDashboardScreen> {
                   borderRadius: BorderRadius.circular(15.0),
                 ),
                 elevation: 2,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: 3, // Example patient count
-                  itemBuilder: (context, index) {
-                    return PatientListItem(
-                      name: index == 0 ? 'Yudi Mubarok' : (index == 1 ? 'Syifa Lazuardi' : 'Anonim${index + 2}'),
-                      status: 'Belum Diperiksa',
-                      buttonText: 'Input Peemriksaan',
-                      buttonColor: AppColors.green,
-                      onButtonPressed: () {
-                        // TODO: Implement input pemeriksaan functionality
+                child: StreamBuilder<QuerySnapshot>(
+                  stream:
+                      FirebaseFirestore.instance
+                          .collection('pemeriksaan')
+                          .orderBy('createdAt', descending: true)
+                          .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    }
+                    if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                      return Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text('Tidak ada data pemeriksaan hari ini'),
+                      );
+                    }
+                    final docs = snapshot.data!.docs;
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: docs.length,
+                      itemBuilder: (context, index) {
+                        final data = docs[index].data() as Map<String, dynamic>;
+                        return PatientListItem(
+                          name: data['nama'] ?? 'Anonim',
+                          status: data['status'] ?? 'Belum Diperiksa',
+                          buttonText: 'Lihat',
+                          buttonColor: AppColors.green,
+                          onButtonPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) => HasilForm(
+                                      nama: data['nama'] ?? '',
+                                      tanggal: data['tanggal'] ?? '',
+                                      gejala: data['gejala'] ?? '',
+                                      detailTambahan:
+                                          data['detailTambahan'] ?? '',
+                                    ),
+                              ),
+                            );
+                          },
+                        );
                       },
                     );
                   },
                 ),
               ),
+
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
                   'Anda memiliki 5 pasien belum diperiksa',
-                  style: TextStyle(
-                    color: Colors.grey[700],
-                  ),
+                  style: TextStyle(color: Colors.grey[700]),
                 ),
               ),
+
               SizedBox(height: 24),
               Text(
                 'Daftar Pasien Selesai Pemeriksaan Hari Ini',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 16),
               Card(
@@ -176,7 +203,7 @@ class _OfficerDashboardScreenState extends State<OfficerDashboardScreen> {
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: 1, // Example completed patient count
+                  itemCount: 1, // Contoh pasien selesai periksa
                   itemBuilder: (context, index) {
                     return PatientListItem(
                       name: 'Anonim2',
@@ -184,7 +211,7 @@ class _OfficerDashboardScreenState extends State<OfficerDashboardScreen> {
                       buttonText: 'Lihat Pemeriksaan',
                       buttonColor: AppColors.green,
                       onButtonPressed: () {
-                        // TODO: Implement lihat pemeriksaan functionality
+                        // Tombol tidak melakukan navigasi
                       },
                     );
                   },
@@ -194,7 +221,6 @@ class _OfficerDashboardScreenState extends State<OfficerDashboardScreen> {
           ),
         ),
       ),
-      // bottomNavigationBar removed
     );
   }
 }
@@ -222,8 +248,8 @@ class PatientListItem extends StatelessWidget {
       child: Row(
         children: [
           CircleAvatar(
-            backgroundColor: AppColors.green.withOpacity(0.3),
-            child: Icon(Icons.person, color: AppColors.green),
+            backgroundColor: buttonColor.withOpacity(0.3),
+            child: Icon(Icons.person, color: buttonColor),
           ),
           SizedBox(width: 16),
           Expanded(
@@ -232,17 +258,11 @@ class PatientListItem extends StatelessWidget {
               children: [
                 Text(
                   name,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   status,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey,
-                  ),
+                  style: TextStyle(fontSize: 14, color: Colors.grey),
                 ),
               ],
             ),

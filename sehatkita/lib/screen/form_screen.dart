@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sehatkita/color.dart'; // Menggunakan warna dari AppColors
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FormScreen extends StatefulWidget {
   @override
@@ -8,7 +9,7 @@ class FormScreen extends StatefulWidget {
 
 class _FormScreenState extends State<FormScreen> {
   final _nameController = TextEditingController();
-  final _dateController = TextEditingController();
+  final _detailController = TextEditingController();
   String selectedDate = "21 Apr 2024"; // Default selected date
 
   bool _isCheckedDemam = false;
@@ -16,6 +17,9 @@ class _FormScreenState extends State<FormScreen> {
   bool _isCheckedNyeriOtot = false;
   bool _isCheckedSesakNapas = false;
   bool _isCheckedKelelahan = false;
+
+  List<Map<String, dynamic>> _patientHistory =
+      []; // List to store patient history
 
   // Fungsi untuk menampilkan dialog pop-up
   void _showConfirmationDialog() {
@@ -61,6 +65,65 @@ class _FormScreenState extends State<FormScreen> {
     );
   }
 
+  // Fungsi untuk gabungkan gejala yg dicek
+  String _getSelectedSymptoms() {
+    List<String> symptoms = [];
+    if (_isCheckedDemam) symptoms.add('Demam');
+    if (_isCheckedBatuk) symptoms.add('Batuk');
+    if (_isCheckedNyeriOtot) symptoms.add('Nyeri Otot');
+    if (_isCheckedSesakNapas) symptoms.add('Sesak Napas');
+    if (_isCheckedKelelahan) symptoms.add('Kelelahan');
+    return symptoms.join(', ');
+  }
+
+  // Fungsi simpan data ke Firestore
+  void _submitForm() async {
+    if (_nameController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Nama tidak boleh kosong')));
+      return;
+    }
+    try {
+      await FirebaseFirestore.instance.collection('pemeriksaan').add({
+        'nama': _nameController.text.trim(),
+        'tanggal': selectedDate,
+        'gejala': _getSelectedSymptoms(),
+        'detailTambahan': _detailController.text.trim(),
+        'status': 'Proses', // Status set to "Proses" initially
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+
+      _showConfirmationDialog();
+
+      // Optionally, reset form setelah submit:
+      _nameController.clear();
+      _detailController.clear();
+      setState(() {
+        _isCheckedDemam = false;
+        _isCheckedBatuk = false;
+        _isCheckedNyeriOtot = false;
+        _isCheckedSesakNapas = false;
+        _isCheckedKelelahan = false;
+        selectedDate = "21 Apr 2024";
+      });
+
+      // Simulate the addition of the patient data to the history
+      setState(() {
+        _patientHistory.add({
+          'nama': _nameController.text.trim(),
+          'status': 'Proses',
+          'tanggal': selectedDate,
+        });
+      });
+    } catch (e) {
+      print('Gagal simpan data pemeriksaan: $e');
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Gagal mengirim data, coba lagi')));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,12 +142,10 @@ class _FormScreenState extends State<FormScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        // Menambahkan SingleChildScrollView untuk scroll
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Menambahkan kalimat "FORM PEMERIKSAAN GRATIS" di dalam body
             Center(
               child: Text(
                 'FORM PEMERIKSAAN GRATIS',
@@ -95,8 +156,8 @@ class _FormScreenState extends State<FormScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 20), // Jarak antara judul dan input form
-            // Label Nama dengan tulisan bold
+            SizedBox(height: 20),
+
             Text(
               'NAMA',
               style: TextStyle(
@@ -106,7 +167,6 @@ class _FormScreenState extends State<FormScreen> {
               ),
             ),
             SizedBox(height: 10),
-            // TextField untuk input Nama
             TextField(
               controller: _nameController,
               decoration: InputDecoration(
@@ -115,12 +175,12 @@ class _FormScreenState extends State<FormScreen> {
                 fillColor: Colors.white,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
-                  borderSide: BorderSide(color: Colors.black), // Stroke hitam
+                  borderSide: BorderSide(color: Colors.black),
                 ),
               ),
             ),
-            SizedBox(height: 20), // Jarak antara Nama dan Tanggal
-            // Label Tanggal dengan tulisan bold
+            SizedBox(height: 20),
+
             Text(
               'TANGGAL',
               style: TextStyle(
@@ -130,18 +190,15 @@ class _FormScreenState extends State<FormScreen> {
               ),
             ),
             SizedBox(height: 10),
-            // Container untuk memilih tanggal (ringkas seperti di JadwalScreen)
             GestureDetector(
               onTap: () {
-                // Tanggal akan diubah saat tapped
                 setState(() {
-                  selectedDate = "22 Apr 2024"; // Contoh tanggal yang dipilih
+                  selectedDate =
+                      "22 Apr 2024"; // Contoh tanggal, kamu bisa buat DatePicker
                 });
               },
               child: Container(
-                width:
-                    double
-                        .infinity, // Same width as the TextField for consistency
+                width: double.infinity,
                 padding: EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -149,16 +206,15 @@ class _FormScreenState extends State<FormScreen> {
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: Text(
-                  selectedDate, // Tanggal yang dipilih ditampilkan di sini
+                  selectedDate,
                   style: TextStyle(fontSize: 18, color: Colors.black),
                 ),
               ),
             ),
-            SizedBox(height: 30), // Jarak antara Tanggal dan Gejala
-            // Membungkus Gejala dan checkbox dengan Row untuk gambar di samping
+            SizedBox(height: 30),
+
             Row(
               children: [
-                // Container untuk checkbox Gejala
                 Expanded(
                   child: Container(
                     padding: EdgeInsets.all(10.0),
@@ -179,7 +235,6 @@ class _FormScreenState extends State<FormScreen> {
                           ),
                         ),
                         SizedBox(height: 10),
-                        // Checkbox Gejala
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -188,11 +243,10 @@ class _FormScreenState extends State<FormScreen> {
                               children: [
                                 Checkbox(
                                   value: _isCheckedDemam,
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      _isCheckedDemam = value!;
-                                    });
-                                  },
+                                  onChanged:
+                                      (val) => setState(
+                                        () => _isCheckedDemam = val!,
+                                      ),
                                 ),
                                 Text("Demam"),
                               ],
@@ -202,11 +256,10 @@ class _FormScreenState extends State<FormScreen> {
                               children: [
                                 Checkbox(
                                   value: _isCheckedBatuk,
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      _isCheckedBatuk = value!;
-                                    });
-                                  },
+                                  onChanged:
+                                      (val) => setState(
+                                        () => _isCheckedBatuk = val!,
+                                      ),
                                 ),
                                 Text("Batuk"),
                               ],
@@ -216,11 +269,10 @@ class _FormScreenState extends State<FormScreen> {
                               children: [
                                 Checkbox(
                                   value: _isCheckedNyeriOtot,
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      _isCheckedNyeriOtot = value!;
-                                    });
-                                  },
+                                  onChanged:
+                                      (val) => setState(
+                                        () => _isCheckedNyeriOtot = val!,
+                                      ),
                                 ),
                                 Text("Nyeri Otot"),
                               ],
@@ -230,11 +282,10 @@ class _FormScreenState extends State<FormScreen> {
                               children: [
                                 Checkbox(
                                   value: _isCheckedSesakNapas,
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      _isCheckedSesakNapas = value!;
-                                    });
-                                  },
+                                  onChanged:
+                                      (val) => setState(
+                                        () => _isCheckedSesakNapas = val!,
+                                      ),
                                 ),
                                 Text("Sesak Napas"),
                               ],
@@ -244,11 +295,10 @@ class _FormScreenState extends State<FormScreen> {
                               children: [
                                 Checkbox(
                                   value: _isCheckedKelelahan,
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      _isCheckedKelelahan = value!;
-                                    });
-                                  },
+                                  onChanged:
+                                      (val) => setState(
+                                        () => _isCheckedKelelahan = val!,
+                                      ),
                                 ),
                                 Text("Kelelahan"),
                               ],
@@ -259,19 +309,18 @@ class _FormScreenState extends State<FormScreen> {
                     ),
                   ),
                 ),
-                // Gambar di sebelah kanan Gejala
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: Image.asset(
-                    'assets/images/doctor1.png', // Gambar ditambahkan di sini
-                    width: 200, // Ukuran gambar bisa disesuaikan
+                    'assets/images/doctor1.png',
+                    width: 200,
                     height: 300,
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 30), // Jarak antara Gejala dan Detail Tambahan
-            // Label Detail Tambahan dengan tulisan bold
+            SizedBox(height: 30),
+
             Text(
               'DETAIL TAMBAHAN',
               style: TextStyle(
@@ -281,25 +330,23 @@ class _FormScreenState extends State<FormScreen> {
               ),
             ),
             SizedBox(height: 10),
-            // TextField untuk Detail Tambahan
             TextField(
+              controller: _detailController,
               decoration: InputDecoration(
                 hintText: 'Tuliskan detail tambahan di sini',
                 filled: true,
                 fillColor: Colors.white,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
-                  borderSide: BorderSide(color: Colors.black), // Stroke hitam
+                  borderSide: BorderSide(color: Colors.black),
                 ),
               ),
+              maxLines: 3,
             ),
-            SizedBox(height: 30), // Jarak antara Detail dan Tombol Kirim
-            // Tombol Kirim yang diletakkan tidak terlalu bawah
+            SizedBox(height: 30),
+
             ElevatedButton(
-              onPressed: () {
-                // Memanggil dialog setelah tombol Kirim ditekan
-                _showConfirmationDialog();
-              },
+              onPressed: _submitForm,
               child: Text('Kirim'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primaryColor,
